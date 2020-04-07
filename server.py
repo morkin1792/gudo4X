@@ -1,11 +1,14 @@
 from flask import Flask, request, make_response
 from datetime import datetime
-import sys
+import sys, os, re
 
 port = 8091
-log = open('server.log', 'a')
+log_dir='./logs'
 script_location = './a.js'
 
+
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
 
 class myFlask(Flask):
     def process_response(self, response):
@@ -26,12 +29,17 @@ def script(a):
     resp.headers['Content-Type'] = 'application/javascript; charset=utf-8'
     return resp
 
-
 @app.route('/', methods= ['POST'])
-def hello():
-    log.write('* [' + datetime.now().strftime('%d/%m/%Y %H:%M:%S') + '] connection from: ' + request.remote_addr + '\n')
+def infos():
+    client_ip = request.remote_addr
+    forwarded = request.headers.get('X-Forwarded-For')
+    if client_ip == '127.0.0.1' and re.match('^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$', forwarded):
+        client_ip = forwarded
+
+    log = open(log_dir + '/' + client_ip + '__' + datetime.now().strftime('%d.%m.%Y__%H.%M.%S__%f') + '.log', 'w')
+    log.write('* [' + datetime.now().strftime('%d/%m/%Y %H:%M:%S') + '] connection from: ' + client_ip + '\n')
     log.write(request.get_data().decode() + '\n')
-    log.flush()
+    log.close()
     resp = make_response('1')
     origin = request.headers.get('Origin')
     if len(origin) < 1:
@@ -40,9 +48,6 @@ def hello():
         resp.headers['Access-Control-Allow-Origin'] = origin
     return resp
 
-
-app.handle_http_exception = hello
-app.register_error_handler(400, hello)
 
 
 if len(sys.argv) > 1:
