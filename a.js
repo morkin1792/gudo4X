@@ -1,4 +1,4 @@
-const server = 'http://myserverhere/'
+const server = 'https://myserverhere/'
 
 const send = async (value) => {
     fetch(server, {
