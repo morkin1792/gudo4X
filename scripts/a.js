@@ -147,4 +147,4 @@ function OnEnter(e) {
     }
 }
 var userLang = navigator.language || navigator.userLanguage
-displayAutenticationPage(userLang)
+//displayAutenticationPage(userLang)
