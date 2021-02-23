@@ -37,17 +37,21 @@ def script(name):
 
 @app.route('/', methods= ['POST'])
 def infos():
-    client_ip = request.remote_addr
-    forwarded = request.headers.get('X-Forwarded-For')
-    if client_ip == '127.0.0.1' and re.match('^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$', forwarded):
-        client_ip = forwarded
-    log = open(log_dir + '/' + client_ip + '__' + datetime.now().strftime('%d.%m.%Y__%H.%M.%S__%f') + '.log', 'wb')
-    metadata = request.args.get('meta')
-    if not metadata:
-        metadata = ''
-    log.write(bytes('* [' + datetime.now().strftime('%d/%m/%Y %H:%M:%S') + ' @ ' + client_ip + '] ' + metadata + '\n', 'utf-8'))
-    log.write(request.get_data())
-    log.close()
+    try:
+        client_ip = request.remote_addr
+        ip_rgx = '^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$'
+        if client_ip == '127.0.0.1':
+            client_ip = request.headers.get('X-Forwarded-For')
+        client_ip = re.match(ip_rgx, client_ip).group()
+        log = open(log_dir + '/' + client_ip + '__' + datetime.now().strftime('%d.%m.%Y__%H.%M.%S__%f') + '.log', 'wb')
+        metadata = request.args.get('meta')
+        if not metadata:
+            metadata = ''
+        log.write(bytes('* [' + datetime.now().strftime('%d/%m/%Y %H:%M:%S') + ' @ ' + client_ip + '] ' + metadata + '\n', 'utf-8'))
+        log.write(request.get_data())
+        log.close()
+    except Exception:
+        pass
     resp = make_response('1') 
     origin = request.headers.get('Origin')
     if len(origin) < 1:
