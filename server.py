@@ -6,6 +6,7 @@ log_directory='./logs'
 static_directory = './static'
 
 app = Flask(__name__, static_url_path='')
+plain_text_urls = False
 
 @app.after_request
 def remove_header(response):
@@ -38,7 +39,9 @@ def load_static(name):
         filepath = static_directory + '/' + name
         content = open(filepath, 'rb').read()
         if len(host) > 0:
-            content = content.replace(b'myserverhere', bytes(host, 'utf8'))
+            content = content.replace(b'myserver', bytes(host, 'utf8'))
+            if plain_text_urls:
+                content = content.replace(b'https', b'http')
         response = make_response(content)
         response.headers['Content-Type'] = get_content_type(filepath)
         response.headers['Cache-Control'] = 'no-cache'
@@ -84,6 +87,8 @@ def main():
             app.run(port=get_port(443), host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
         else:
             print(' * ssl cert files not found, it will run in plaintext')
+            global plain_text_urls
+            plain_text_urls = True
             app.run(port=get_port(80), host='0.0.0.0')
     except PermissionError:
         print('\n[!] permission error, try execute as root or change the port')
