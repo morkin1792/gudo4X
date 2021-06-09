@@ -12,7 +12,7 @@ sudo apt update && sudo apt install -y python3-flask python3-magic
 * run:
 
 ```bash
-sudo bash run.sh
+sudo bash start.sh start &
 ```
 
 * send the script in a xss:
@@ -25,3 +25,8 @@ sudo bash run.sh
 ```
 
 * see the log directory
+
+* clean logs
+```bash
+sudo bash run.sh clean
+bash
