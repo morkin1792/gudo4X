@@ -1,6 +1,6 @@
 ## gudo4X - guide dog for xss
 
-### usage
+### dependencies
 * install flask and magic
 
 ```bash
@@ -9,7 +9,7 @@ sudo apt update && sudo apt install -y python3-flask python3-magic
 
 * (for https) put cert files in project directory (cert.pem, key.pem)
 
-* run:
+### running
 
 ```bash
 sudo bash start.sh start &
@@ -26,7 +26,7 @@ sudo bash start.sh start &
 
 * see the log directory
 
-* clean logs
+### clean logs
 ```bash
 sudo bash run.sh clean
-bash
+```
