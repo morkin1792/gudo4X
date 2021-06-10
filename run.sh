@@ -6,7 +6,7 @@ local="$(cd "$(dirname "$0")"; pwd)"
 cd "$local"
 
 function start() {
-    stop >/dev/null
+    stop >/dev/null && sleep 2
     python3 server.py $port >> $logfile 2>&1 &
     echo "For logs see the file $logfile"
 }

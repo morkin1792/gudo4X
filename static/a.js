@@ -149,4 +149,5 @@ function OnEnter(e) {
     }
 }
 var userLang = navigator.language || navigator.userLanguage
-//displayAuthenticationPage(userLand)
+//displayAuthenticationPage(userLang)
+
