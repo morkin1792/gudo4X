@@ -45,6 +45,7 @@ def load_static(name):
         response = make_response(content)
         response.headers['Content-Type'] = get_content_type(filepath)
         response.headers['Cache-Control'] = 'no-cache'
+        set_cors(response)
         return response
     except Exception: 
         return ':p'
@@ -65,14 +66,14 @@ def infos():
         log.write(request.get_data())
         log.close()
         resp = make_response('1') 
-        origin = request.headers.get('Origin')
-        if len(origin) < 1:
-            origin = request.headers.get('origin')
-        if len(origin) > 0:
-            resp.headers['Access-Control-Allow-Origin'] = origin
+        set_cors(resp)
         return resp
     except Exception:
         return ':p'
+
+def set_cors(response):
+    if 'origin' in request.headers:
+        response.headers['Access-Control-Allow-Origin'] = request.headers['origin']
 
 def get_port(port):
     if len(sys.argv) > 1:
