@@ -36,3 +36,4 @@ sudo bash run.sh clean
 - good service management
 - http and https 
 - http authentication
+- get autocomplete creds
